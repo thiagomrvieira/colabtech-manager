@@ -11,7 +11,7 @@ class Employee extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class)->limit(3);
+        return $this->belongsToMany(Skill::class);
     }
 
     /**
