@@ -19,11 +19,15 @@ class EmployeeController extends Controller
     /**
      * List all employees.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $employees = Employee::with('skills')->orderBy('name')->get();
+        $employees = 
+            Employee::with('skills')
+                ->filter($request->all())
+                ->orderBy('name')->get();
 
         return EmployeeResource::collection($employees);
     }
