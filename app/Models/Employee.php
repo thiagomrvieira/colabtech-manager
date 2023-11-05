@@ -35,4 +35,37 @@ class Employee extends Model
     {
         return $value ? true : false;
     }
+
+    /**
+     * Apply a filter to the query based on the given filters.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeFilter($query, $filters)
+    {
+        $query->when($filters['name'] ?? false, fn ($query, $name) => 
+            $query->where('name', 'like', '%' . $name . '%')
+        );
+
+        $query->when($filters['email'] ?? false, fn ($query, $email) => 
+            $query->where('email', 'like', '%' . $email . '%')
+        );
+
+        $query->when($filters['cpf'] ?? false, fn ($query, $cpf) => 
+            $query->where('cpf', 'like', '%' . $cpf . '%')
+        );
+
+        $query->when($filters['phone'] ?? false, fn ($query, $phone) => 
+            $query->where('phone', 'like', '%' . $phone . '%')
+        );
+
+        $query->when($filters['validated'] ?? false, fn ($query, $validated) => 
+            $query->where('validated', $validated)
+        );
+
+        return $query;
+    }
 }
+
