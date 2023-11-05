@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('email', 100);
             $table->string('cpf', 14)->unique();
+            $table->boolean('validated')->default(false);
+            $table->timestamp('validated_at')->nullable();
             $table->timestamps();
         });
     }

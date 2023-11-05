@@ -31,6 +31,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        // TODO: Move to a Form Request
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
@@ -40,6 +41,7 @@ class EmployeeController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
+        // TODO: Move to a Form Request
 
         $employee = Employee::create($request->all());
 
@@ -55,14 +57,16 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee): JsonResponse
     {
-
+        // TODO: Move to a Form Request
         $validator = Validator::make($request->all(), [
-            'cpf' => 'size:11|unique:employees',
+            'validated' => 'boolean',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
+        // TODO: Move to a Form Request
+
         $employee->update($request->all());
 
         return response()->json($employee, 200);
