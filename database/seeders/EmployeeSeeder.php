@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Faker\Factory as FakerFactory;
 
-
 class EmployeeSeeder extends Seeder
 {
     /**
@@ -25,8 +24,9 @@ class EmployeeSeeder extends Seeder
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'cpf' => $faker->unique()->numerify('###########'),
+                'phone' => $faker->numerify('(##) #####-####'),
             ]);
-            
+
             $this->attachRandomSkills($employee);
         }
     }
@@ -42,5 +42,4 @@ class EmployeeSeeder extends Seeder
         $skills = Skill::inRandomOrder()->limit(rand(1, 3))->get();
         $employee->skills()->attach($skills);
     }
-
 }

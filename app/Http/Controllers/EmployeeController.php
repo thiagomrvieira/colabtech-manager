@@ -20,7 +20,7 @@ class EmployeeController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $employees = Employee::with('skills')->get();
+        $employees = Employee::with('skills')->orderBy('name')->get();
 
         return EmployeeResource::collection($employees);
     }
@@ -35,9 +35,11 @@ class EmployeeController extends Controller
     {
         // TODO: Move to a Form Request
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'cpf' => 'required|size:11|unique:employees',
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:100',
+            'cpf' => 'required|string|size:14|unique:employees,cpf',
+            'phone' => 'nullable|regex:/\(\d{2}\) \d{5}-\d{4}/',
+            'skills' => 'required|array|min:1|max:3',
         ]);
 
         if ($validator->fails()) {
