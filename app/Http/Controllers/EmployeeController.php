@@ -10,6 +10,7 @@ use App\Http\Resources\EmployeeResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
+use App\Http\Resources\EmployeeDetailResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class EmployeeController extends Controller
@@ -25,6 +26,16 @@ class EmployeeController extends Controller
         $employees = Employee::with('skills')->orderBy('name')->get();
 
         return EmployeeResource::collection($employees);
+    }
+
+    /**
+     * Show the employee data.
+     * @param  \App\Models\Employee  $employee
+     * @return App\Http\Resources\EmployeeDetailResource
+     */
+    public function show(Employee $employee): EmployeeDetailResource
+    {
+        return new EmployeeDetailResource($employee);
     }
     
     /**

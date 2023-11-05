@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EmployeeResource extends JsonResource
+class EmployeeDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +18,11 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'cpf' => $this->cpf,
             'phone' => $this->phone,
             'validated' => $this->validated,
+            'validated_at' => $this->validated_at,
+            'skills' => SkillResource::collection($this->skills)
         ];
     }
 }
